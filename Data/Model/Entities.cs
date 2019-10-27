@@ -19,15 +19,19 @@ namespace Data.Model
                 : base(new FbConnection(connString), true)
         { }
         private static Entities Instance;
+        public static object mutex = new object();
         public static Entities GetInstance()
         {
-            if (Instance == null)
+            lock (mutex)
             {
-                Instance = new Entities();
-                if (!Instance.Database.Exists()) { DB_Access.GetInstatce().CreateNew(); Instance = new Entities(); }
+                if (Instance == null)
+                {
+                    Instance = new Entities();
+                    if (!Instance.Database.Exists()) { DB_Access.GetInstatce().CreateNew(); Instance = new Entities(); }
+                }
+                initDatabase();
+                return Instance;
             }
-            initDatabase();
-            return Instance;
         }
         public static void recreate()
         {
