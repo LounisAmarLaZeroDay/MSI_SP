@@ -1,0 +1,279 @@
+﻿<UserControl x:Class="UserControls.Views.InvoicePurchase"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UserControls.Views"
+             mc:Ignorable="d"
+             
+            
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:iconverter="clr-namespace:LaZeroDayCore.Converter;assembly=LaZeroDayCore"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             >
+    <!-- Converter begin -->
+    <UserControl.Resources>
+        <iconverter:IConverterImageProdect x:Key="IConverterImageProdect" />
+        <iconverter:IConverterImagePerson x:Key="IConverterImagePerson" />
+    </UserControl.Resources>
+    <!-- Converter End -->
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!--  **************************************** Grid input ****************************************   -->
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
+                    <Controls:NumericUpDown HideUpDownButtons="True" IsReadOnly="True" FontFamily="{DynamicResource digital-7}" Background="Black" FontWeight="Bold"  Foreground="Red" FontSize="40" Value="{Binding MONEY_PAID_ALL}"  StringFormat="{}{0:N2}" MinWidth="500"/>
+                    <Button Style="{DynamicResource ButtonNull}" Command="{Binding commandExecute}" CommandParameter="PrintInvoice">
+                        <materialDesign:PackIcon Kind="Printer" Height="30" Width="30" Foreground="Blue"/>
+                    </Button>
+                    <Button Style="{DynamicResource ButtonNull}" Command="{Binding commandExecute}" CommandParameter="SaveInvoicePDF">
+                        <materialDesign:PackIcon Kind="Floppy" Height="30" Width="30" Foreground="Blue"/>
+                    </Button>
+                    <Button Style="{DynamicResource ButtonNull}" Command="{Binding commandExecute}" CommandParameter="AddNewInvoice">
+                        <materialDesign:PackIcon Kind="AddShoppingCart" Height="30" Width="30" Foreground="Blue"/>
+                    </Button>
+                    <Button Style="{DynamicResource ButtonNull}" Command="{Binding commandExecute}" 
+                        CommandParameter="EditInvoice" >
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Table" Height="30" Width="30" Foreground="Blue"/>
+                            <TextBlock Text="{Binding Invoice_ID}" Style="{DynamicResource TextBlocBlackNull}"/>
+                            <TextBlock Text=" / " Style="{DynamicResource TextBlocBlackNull}"/>
+                            <TextBlock Text="{Binding Invoice_ALL}" Style="{DynamicResource TextBlocBlackNull}"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{DynamicResource ButtonNull}" Command="{Binding commandExecute}" 
+                        CommandParameter="EditWholesaler">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding PICTURE_WHOLESALER, Converter={StaticResource IConverterImagePerson}}" Width="30" Height="30"/>
+                            <TextBlock Text="{Binding Wholesaler_Name}" Style="{DynamicResource TextBlocBlackNull}"/>
+                        </StackPanel>
+                    </Button>
+
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
+                    <TextBox FontSize="20" FontWeight="Bold" Foreground="Blue" Width="200"  materialDesign:HintAssist.Hint="search..."  Text="{Binding ValueSearchProduct,UpdateSourceTrigger=PropertyChanged}" >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="GotFocus">
+                                <i:InvokeCommandAction Command="{Binding commandExecute}" CommandParameter="GotFocusSearch"/>
+                            </i:EventTrigger>
+                            <!--<i:EventTrigger EventName="LostFocus">
+                                <i:InvokeCommandAction Command="{Binding commandExecute}" CommandParameter="OverlayGridCancel"/>
+                            </i:EventTrigger>-->
+                        </i:Interaction.Triggers>
+                    </TextBox>
+                    <TextBox  FontSize="20" FontWeight="Bold" Foreground="Blue" Width="200"  materialDesign:HintAssist.Hint="code..."   Text="{Binding ValueCodeSearchProduct,UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        <!--  **************************************** Grid DataGrid Invoice ****************************************   -->
+        <Grid Grid.Row="1">
+            <DataGrid x:Name="myDataGrid"
+                  Style="{StaticResource AzureDataGrid}"
+                  ItemsSource="{Binding DataGridItemsSource}"
+                  SelectedItem="{Binding DataGridSelectedItem}"
+                 
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                   >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                        <i:InvokeCommandAction Command="{Binding DataContext.commandExecute,ElementName=myDataGrid}" CommandParameter="MouseDoubleClick"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <DataGrid.Columns>
+                    <!--  **************************************** Columns ****************************************   -->
+                    <DataGridTemplateColumn Header="Action" IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Background="{x:Null}" BorderBrush="{x:Null}"
+                                         Command="{Binding DataContext.commandExecute,ElementName=myDataGrid}"
+                                         CommandParameter="Delete">
+                                    <materialDesign:PackIcon Kind="Delete" Height="20" Width="20" Foreground="Blue"/>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <!--  **************************************** Columns ****************************************   -->
+                    <DataGridTemplateColumn Header="Name">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <TextBlock  Text="{Binding NAME,Mode=OneWay}" Margin="0,0,10,0"  VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <!--  **************************************** Columns ****************************************   -->
+                    <DataGridTemplateColumn Header="Code">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <TextBlock  Text="{Binding CODE,Mode=OneWay}" Margin="0,0,10,0"  VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <!--  **************************************** Columns ****************************************   -->
+                    <DataGridTemplateColumn Header="Money Unit">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Margin="0,0,10,0" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Blue"
+                                        Command="{Binding DataContext.commandExecute,ElementName=myDataGrid}" 
+                                        CommandParameter="EditMoneyUnit"
+                                        Content="{Binding MONEY_UNIT,Mode=OneWay}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <!--  **************************************** Columns ****************************************   -->
+                    <DataGridTemplateColumn Header="Quantity">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Margin="0,0,10,0" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Blue"
+                                        Command="{Binding DataContext.commandExecute,ElementName=myDataGrid}" 
+                                        CommandParameter="EditQuantity"
+                                        Content="{Binding QUANTITY,Mode=OneWay}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <!--  **************************************** Columns ****************************************   -->
+                    <DataGridTemplateColumn Header="tax %">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Margin="0,0,10,0" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Blue"
+                                        Command="{Binding DataContext.commandExecute,ElementName=myDataGrid}" 
+                                        CommandParameter="EditTaxPerce"
+                                        Content="{Binding TAX_PERCE,Mode=OneWay}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <!--  **************************************** Columns ****************************************   -->
+                    <DataGridTemplateColumn Header="Stamp">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Margin="0,0,10,0" VerticalAlignment="Center" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Blue"
+                                        Command="{Binding DataContext.commandExecute,ElementName=myDataGrid}" 
+                                        CommandParameter="EditStamp"
+                                        Content="{Binding STAMP,Mode=OneWay}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <!--  **************************************** Columns ****************************************   -->
+                    <DataGridTemplateColumn Header="tax value">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock  Text="{Binding TAX_VALUE,Mode=OneWay}" Margin="0,0,10,0"  HorizontalAlignment="Right"  VerticalAlignment="Center"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <!--  **************************************** Columns ****************************************   -->
+                    <DataGridTemplateColumn Header="Paid">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock  Text="{Binding MONEY_PAID,Mode=OneWay}" Margin="0,0,10,0"   VerticalAlignment="Center" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <!--  **************************************** Columns ****************************************   -->
+                    <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Visibility="Hidden" Header="ID" Binding="{Binding ID}"/>
+                    <!--  **************************************** Columns ****************************************   -->
+                    <DataGridTextColumn IsReadOnly="True" MaxWidth="150" Visibility="Hidden" Header="ID Product" Binding="{Binding ID_PRODUCT}"/>
+                    <!--  **************************************** Columns ****************************************   -->
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <!--  **************************************** Grid Edit ****************************************   -->
+        <Grid x:Name="myGrid" Grid.Row="1" Visibility="{Binding VisibilityEdit}" >
+            <Grid Background="Black" Opacity="0.5"/>
+            <Border
+            Background="Orange" 
+            BorderBrush="Black" 
+            BorderThickness="1" 
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center">
+                <StackPanel>
+                    <TextBox MinWidth="150" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding EditValue}"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Margin="5" Content="Ok" Background="{x:Null}"
+                                Command="{Binding commandExecute}" 
+                                CommandParameter="EditOk"  
+                                />
+                        <Button Margin="5" Content="Cancel" Background="{x:Null}"
+                                Command="{Binding commandExecute}" 
+                                CommandParameter="OverlayGridCancel"  />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+        <!--  **************************************** Grid Search Product ****************************************   -->
+        <Grid Grid.Row="1" Visibility="{Binding VisibilitySearchProduct}" >
+            <Grid Background="Black" Opacity="0.5"/>
+            <Border
+                Background="#EEEEEE"
+                BorderBrush="Black" 
+                BorderThickness="5" 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <local:TableProducts/>
+                    <Button Grid.Row="1" Style="{DynamicResource ButtonNull}" Command="{Binding commandExecute}" CommandParameter="OverlayGridCancel">
+                        <materialDesign:PackIcon Kind="CloseCircle" Height="30" Width="30" Foreground="Blue" />
+                    </Button>
+                </Grid>
+            </Border>
+        </Grid>
+        <!--  **************************************** Grid Search Wholesaler ****************************************   -->
+        <Grid Grid.Row="1" Visibility="{Binding VisibilitySearchWholesaler}" >
+            <Grid Background="Black" Opacity="0.5"/>
+            <Border
+                Background="#EEEEEE"
+                BorderBrush="Black" 
+                BorderThickness="5" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <local:TableWholesaler/>
+                    <Button Grid.Row="1" Style="{DynamicResource ButtonNull}" Command="{Binding commandExecute}" CommandParameter="OverlayGridCancel">
+                        <materialDesign:PackIcon Kind="CloseCircle" Height="30" Width="30" Foreground="Blue" />
+                    </Button>
+                </Grid>
+            </Border>
+        </Grid>
+        <!--  **************************************** Grid Search Invoice ****************************************   -->
+        <Grid Grid.Row="1" Visibility="{Binding VisibilitySearchInvoice}" >
+            <Grid Background="Black" Opacity="0.5"/>
+            <Border
+                Background="#EEEEEE"
+                BorderBrush="Black" 
+                BorderThickness="5" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <local:TableInvoicePurchase/>
+                    <Button Grid.Row="1" Style="{DynamicResource ButtonNull}" Command="{Binding commandExecute}" CommandParameter="OverlayGridCancel">
+                        <materialDesign:PackIcon Kind="CloseCircle" Height="30" Width="30" Foreground="Blue" />
+                    </Button>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

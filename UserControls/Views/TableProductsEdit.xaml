@@ -1,0 +1,111 @@
+﻿<UserControl x:Class="UserControls.Views.TableProductsEdit"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UserControls.Views"
+             mc:Ignorable="d" 
+
+
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:iconverter="clr-namespace:LaZeroDayCore.Converter;assembly=LaZeroDayCore"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             >
+    <!-- Converter begin -->
+    <UserControl.Resources>
+        <iconverter:IConverterImageProdect x:Key="IConverterImageProdect" />
+    </UserControl.Resources>
+    <!-- Converter End -->
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                        <!-- Image Edit -->
+                        <Button Style="{DynamicResource ButtonNull}" Command="{Binding commandExecute}"
+                            CommandParameter="EditImage">
+                            <materialDesign:PackIcon Kind="Edit" Height="30" Width="30" Foreground="Blue"/>
+                        </Button>
+                        <!-- Image Delete -->
+                        <Button Style="{DynamicResource ButtonNull}" Command="{Binding commandExecute}"
+                                CommandParameter="DeleteImage">
+                            <materialDesign:PackIcon Kind="Delete" Height="30" Width="30" Foreground="Blue" />
+                        </Button>
+                    </StackPanel>
+                    <Border BorderThickness="1"
+                            BorderBrush="#FF00FF00"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            >
+                        <Image Source="{Binding PICTURE_PRODUCT, Converter={StaticResource IConverterImageProdect}}" Margin="5,5,5,5" Width="150" Height="150"/>
+                    </Border>
+                </StackPanel>
+
+                <!-- *************************************************** Begin Editable *************************************************** -->
+                <TextBox  Width="500" Margin="50,10,50,10" FontSize="20" FontWeight="Bold" Foreground="Black" MaxLength="25" Text="{Binding NAME}" materialDesign:HintAssist.Hint="Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                <StackPanel  Width="500" Margin="50,10,50,10" Orientation="Horizontal"  HorizontalAlignment="Center">
+                    <Label Width="100" Margin="10,10,10,10" Content="quantity"  />
+                    <Controls:NumericUpDown Width="300" Margin="10,10,10,10" Minimum="0" Value="{Binding QUANTITY}"  StringFormat="{}{0:N2}"/>
+                </StackPanel>
+                <StackPanel  Width="500" Margin="50,10,50,10" Orientation="Horizontal"  HorizontalAlignment="Center">
+                    <Label Width="100" Margin="10,10,10,10" Content="money purchasing"  />
+                    <Controls:NumericUpDown Width="300" Margin="10,10,10,10" Minimum="0" Value="{Binding MONEY_PURCHASE}"  StringFormat="{}{0:N2}"/>
+                </StackPanel>
+                <StackPanel  Width="500" Margin="50,10,50,10" Orientation="Horizontal"  HorizontalAlignment="Center">
+                    <Label Width="100" Margin="10,10,10,10" Content="money selling"  />
+                    <Controls:NumericUpDown Width="300" Margin="10,10,10,10" Minimum="0" Value="{Binding MONEY_SELLING_1}"  StringFormat="{}{0:N2}"/>
+                </StackPanel>
+                <Expander Margin="5" ExpandDirection="Down" IsExpanded="False" Background="{x:Null}">
+                    <Expander.Header>
+                        <BulletDecorator>
+                            <Border CornerRadius="10,10,10,10"  Background="#BBDDFF">
+                                <TextBlock Margin="100,10,100,10" HorizontalAlignment="Center" VerticalAlignment="Center" Text="optional" Style="{DynamicResource TextBlocBlackNull}"/>
+                            </Border>
+                        </BulletDecorator>
+                    </Expander.Header>
+                    <StackPanel Orientation="Vertical">
+                        <TextBox  Width="500" Margin="50,10,50,10" FontSize="20" FontWeight="Bold" Foreground="Black" MaxLength="25" Text="{Binding DESCRIPTION}" materialDesign:HintAssist.Hint="Description" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                        <TextBox  Width="500" Margin="50,10,50,10" FontSize="20" FontWeight="Bold" Foreground="Black" MaxLength="25" Text="{Binding CODE}" materialDesign:HintAssist.Hint="Code" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                        <TextBox  Width="500" Margin="50,10,50,10" FontSize="20" FontWeight="Bold" Foreground="Black" MaxLength="25" Text="{Binding TYPE}" materialDesign:HintAssist.Hint="Type" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                       
+                        <StackPanel  Width="500" Margin="50,10,50,10" Orientation="Horizontal"  HorizontalAlignment="Center">
+                            <Label Width="100" Margin="10,10,10,10" Content="quantity min"  />
+                            <Controls:NumericUpDown Width="300" Margin="10,10,10,10" Minimum="0" Value="{Binding QUANTITY_MIN}"  StringFormat="{}{0:N2}"/>
+                        </StackPanel>
+                        <StackPanel  Width="500" Margin="50,10,50,10" Orientation="Horizontal"  HorizontalAlignment="Center">
+                            <Label Width="100" Margin="10,10,10,10" Content="money percentage tax"  />
+                            <Controls:NumericUpDown Width="300" Margin="10,10,10,10" Minimum="0" Value="{Binding TAX_PERCE}"  StringFormat="{}{0:N2}"/>
+                        </StackPanel>
+                        <StackPanel  Width="500" Margin="50,10,50,10" Orientation="Horizontal"  HorizontalAlignment="Center">
+                            <Label Width="100" Margin="10,10,10,10" Content="money selling min"  />
+                            <Controls:NumericUpDown Width="300" Margin="10,10,10,10" Minimum="0" Value="{Binding MONEY_SELLING_MIN}"  StringFormat="{}{0:N2}"/>
+                        </StackPanel>
+                        <StackPanel  Width="500" Margin="50,10,50,10" Orientation="Horizontal"  HorizontalAlignment="Center">
+                            <Label Width="100" Margin="10,10,10,10" Content="date production"/>
+                            <DatePicker Width="300" Margin="10,0,10,10" SelectedDate="{Binding DATE_PRODUCTION}" />
+                        </StackPanel>
+                        <StackPanel  Width="500" Margin="50,10,50,10" Orientation="Horizontal"  HorizontalAlignment="Center">
+                            <Label Width="100" Margin="10,10,10,10" Content="date purchase"/>
+                            <DatePicker Width="300" Margin="10,0,10,10" SelectedDate="{Binding DATE_PURCHASE}" />
+                        </StackPanel>
+                        <StackPanel  Width="500" Margin="50,10,50,10" Orientation="Horizontal"  HorizontalAlignment="Center">
+                            <Label Width="100" Margin="10,10,10,10" Content="date expiration"/>
+                            <DatePicker Width="300" Margin="10,0,10,10" SelectedDate="{Binding DATE_EXPIRATION}" />
+                        </StackPanel>
+
+                    </StackPanel>
+                </Expander>
+                          
+                        
+                <!-- *************************************************** Begin Editable *************************************************** -->
+
+                <Button Style="{DynamicResource ButtonNull}" Command="{Binding commandExecute}" CommandParameter="Save">
+                    <materialDesign:PackIcon Kind="Floppy" Height="30" Width="30" Foreground="Blue"/>
+                </Button>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

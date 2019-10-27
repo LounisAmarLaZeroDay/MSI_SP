@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="UserControls.Views.Header"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UserControls.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="50"
+             
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:iconverter="clr-namespace:LaZeroDayCore.Converter;assembly=LaZeroDayCore"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             >
+    <!-- Converter begin -->
+    <UserControl.Resources>
+        <iconverter:IConverterImageCompany x:Key="IConverterImageCompany" />
+        <iconverter:IConverterImagePerson x:Key="IConverterImagePerson" />
+    </UserControl.Resources>
+    <!-- Converter End -->
+    <Grid >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
+            <Button Style="{DynamicResource ButtonNull}" Command="{Binding commandExecute}" CommandParameter="MainMenu" >
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{Binding PICTURE_COMPANY, Converter={StaticResource IConverterImageCompany}}" Width="30" Height="30"/>
+                    <materialDesign:PackIcon Kind="Menu" Height="30" Width="30" Foreground="Blue"/>
+                </StackPanel>
+            </Button>
+            
+            <Button Style="{DynamicResource ButtonNull}" Command="{Binding commandExecute}" CommandParameter="Settings" >
+                <materialDesign:PackIcon Kind="Settings" Height="30" Width="30" Foreground="Blue"/>
+            </Button>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            <TextBlock Style="{DynamicResource TextBlocRedkNull}" Text="{Binding DigitalTimer}" MinWidth="100"  FontFamily="{DynamicResource digital-7}"/>
+        </StackPanel>
+        <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Style="{DynamicResource ButtonNull}" Command="{Binding commandExecute}" Visibility="{Binding VisibilityLogout}" CommandParameter="Logout" >
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding User_Name}" Style="{DynamicResource TextBlocBlackNull}" MinWidth="50"/>
+                    <Image Source="{Binding PICTURE_USER, Converter={StaticResource IConverterImagePerson}}" Width="30" Height="30"/>
+                    <materialDesign:PackIcon Kind="Logout" Height="30" Width="30" Foreground="Blue"/>
+                </StackPanel>
+            </Button>
+            <Button Style="{DynamicResource ButtonNull}" Command="{Binding commandExecute}" CommandParameter="Close" >
+                <materialDesign:PackIcon Kind="Close" Height="30" Width="30" Foreground="Blue"/>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,83 @@
+﻿<UserControl x:Class="UserControls.Views.SettingsDatabase"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UserControls.Views"
+             mc:Ignorable="d" 
+             
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             >
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <!-- TextBox -->
+                    <TextBox Margin="10,10,10,10" Text="{Binding TB_DatabasePath}" materialDesign:HintAssist.Hint="Database Path" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                    <!-- Button -->
+                    <Button  Height="30" Width="30" Margin="10,10,10,10"  Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
+                                    Command="{Binding commandExecute}"
+                                    CommandParameter="DatabasePath" >
+                        <Button.Resources>
+                            <SolidColorBrush x:Key="SecondaryAccentBrush" Color="White"/>
+                            <SolidColorBrush x:Key="SecondaryAccentForegroundBrush" Color="Blue"/>
+                        </Button.Resources>
+                        <materialDesign:PackIcon Kind="File" Height="30" Width="30" />
+                    </Button>
+                </StackPanel>
+                <Button Margin="10,2,2,10" Width="200" Background="Gray" Content="Test" 
+                        Command="{Binding commandExecute}"
+                        CommandParameter="Test"    
+                    />
+                <Button Margin="10,2,2,10" Width="200" Background="Gray" Content="Shutdown" 
+                        Command="{Binding commandExecute}"
+                        CommandParameter="Shutdown"   
+                    />
+                <Button Margin="10,2,2,10" Width="200" Background="Gray" Content="Backup" 
+                        Command="{Binding commandExecute}"
+                        CommandParameter="Backup"     
+                    />
+                <Button Margin="10,2,2,10" Width="200" Background="Gray" Content="Restore" 
+                        Command="{Binding commandExecute}"
+                        CommandParameter="Restore"     
+                    />
+                <Button Margin="10,2,2,10" Width="200" Background="Gray" Content="CreateNew" 
+                            Command="{Binding commandExecute}"
+                            CommandParameter="CreateNew"     
+                        />
+                <Button Margin="10,2,2,10" Width="200" Background="Gray" Content="use Server"     
+                                Command="{Binding commandExecute}"
+                                CommandParameter="Default" />
+                <Button Margin="10,2,2,10" Width="200" Background="Gray" Content="use Embedded"     
+                                Command="{Binding commandExecute}"
+                                CommandParameter="Embedded" />
+                <ComboBox  Margin="50,10,50,10" SelectedValue="{Binding ComboBoxSelected, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding ComboBoxSource}" 
+                                    DisplayMemberPath="Display" SelectedValuePath="Value" />
+                <TextBox Margin="50,10,50,10" Text="{Binding TB_DatabaseDataSource}" materialDesign:HintAssist.Hint="Database DataSource" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                <TextBox Margin="50,10,50,10" Text="{Binding TB_DatabasePort}" materialDesign:HintAssist.Hint="Database Port" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+
+                <TextBox Margin="50,10,50,10" Text="{Binding TB_DatabaseUserID}" materialDesign:HintAssist.Hint="Database UserID" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                <TextBox Margin="50,10,50,10" Text="{Binding TB_DatabasePassword}" materialDesign:HintAssist.Hint="Database Password" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+                <StackPanel Margin="50,10,50,10" Orientation="Horizontal"  HorizontalAlignment="Center">
+                    <Label Width="50" Margin="10,10,10,10" Content="Port" />
+                    <Controls:NumericUpDown Margin="10,10,10,10"  Value="{Binding TB_DatabasePort}"/>
+                </StackPanel>
+                <!-- Button -->
+                <Button  Height="30" Width="30" Margin="2,2,10,2" Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
+                        Command="{Binding commandExecute}" 
+                        CommandParameter="Save">
+                    <Button.Resources>
+                        <SolidColorBrush x:Key="SecondaryAccentBrush" Color="White"/>
+                        <SolidColorBrush x:Key="SecondaryAccentForegroundBrush" Color="Blue"/>
+                    </Button.Resources>
+                    <materialDesign:PackIcon Kind="Floppy" Height="30" Width="30" />
+                </Button>
+            </StackPanel>
+            <!-- Button -->
+        </ScrollViewer>
+
+    </Grid>
+</UserControl>

@@ -1,0 +1,69 @@
+﻿<Application x:Class="MSI.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:MSI"
+           
+             xmlns:m="http://materialdesigninxaml.net/winfx/xaml/themes"
+             >
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive! -->
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <!-- Accent and AppTheme setting -->
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Red.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                <!-- Accent and AppTheme button -->
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
+
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Cobalt.xaml" />
+                <!-- MaterialDesignThemes -->
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+                <!-- -->
+                <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    <Style x:Key="ButtonNull" TargetType="Button">
+                        <Setter Property="Control.Foreground" Value="{x:Null}" />
+                        <Setter Property="Control.Background" Value="{x:Null}" />
+                        <Setter Property="Control.BorderBrush" Value="{x:Null}" />
+                        <Setter Property="Control.BorderThickness" Value="0" />
+                    </Style>
+                    <Style x:Key="TextBlocRedkNull" TargetType="TextBlock">
+                        <Setter Property="Control.Foreground" Value="Red" />
+                        <Setter Property="Control.FontSize" Value="20" />
+                        <Setter Property="Control.Background" Value="{x:Null}" />
+                        <Setter Property="Control.FontWeight" Value="Bold" />
+                        <Setter Property="Control.Margin" Value="2" />
+                    </Style>
+                    <Style x:Key="TextBlocBlackNull" TargetType="TextBlock">
+                        <Setter Property="Control.Foreground" Value="Black" />
+                        <Setter Property="Control.FontSize" Value="20" />
+                        <Setter Property="Control.Background" Value="{x:Null}" />
+                        <Setter Property="Control.FontWeight" Value="10" />
+                        <Setter Property="Control.Margin" Value="2" />
+                    </Style>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+
+            <BitmapImage  x:Key="QuestionMark_image" UriSource="assets/QuestionMark.png"></BitmapImage>
+            <BitmapImage  x:Key="Sell_image" UriSource="assets/Sell.png"></BitmapImage>
+            <BitmapImage  x:Key="TableProducts_image" UriSource="assets/TableProducts.png"></BitmapImage>
+            <BitmapImage  x:Key="TableCustomers_image" UriSource="assets/TableCustomers.png"></BitmapImage>
+            <BitmapImage  x:Key="TableUsers_image" UriSource="assets/TableUsers.png"></BitmapImage>
+            <BitmapImage  x:Key="TableWholesaler_image" UriSource="assets/TableWholesaler.png"></BitmapImage>
+            <BitmapImage  x:Key="TableInvoice_image" UriSource="assets/TableInvoice.png"></BitmapImage>
+
+            <FontFamily  x:Key="digital-7">/assets/#digital-7</FontFamily>
+            <FontFamily  x:Key="dot digital-7">/assets/#dot digital-7</FontFamily>
+
+
+        </ResourceDictionary>
+
+    </Application.Resources>
+</Application>

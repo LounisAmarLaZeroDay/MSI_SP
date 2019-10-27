@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="UserControls.Views.Login"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UserControls.Views"
+             mc:Ignorable="d" 
+             Width="500" Height="500"
+             
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:iconverterImage="clr-namespace:LaZeroDayCore.Converter;assembly=LaZeroDayCore"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             >
+    <Grid x:Name="GridMain">
+        <GroupBox Header="Login" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,5,5,5"  Width="400" Height="400" >
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                <!-- user -->
+                <TextBox FontSize="25" Width="200" Margin="10,10,10,10" materialDesign:HintAssist.Hint="User" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding NAME}" />
+                <!-- password input -->
+                <PasswordBox FontSize="25" Width="200" Margin="10,10,10,10" PasswordChar="*" x:Name="pwbox"
+                    materialDesign:HintAssist.Hint="Password"
+                    Style="{StaticResource MaterialDesignFloatingHintPasswordBox}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PasswordChanged" >
+                            <i:InvokeCommandAction Command="{Binding commandPasswordChanged}"   CommandParameter="{Binding ElementName=pwbox,  Mode=OneWay}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </PasswordBox>
+                <!-- login -->
+                <Button  Height="30" Width="30" Margin="2,2,10,2"
+                         Style="{StaticResource MaterialDesignFloatingActionAccentButton}"
+                         Command="{Binding commandLogin}"                          >
+                    <Button.Resources>
+                        <SolidColorBrush x:Key="SecondaryAccentBrush" Color="White"/>
+                        <SolidColorBrush x:Key="SecondaryAccentForegroundBrush" Color="Blue"/>
+                    </Button.Resources>
+                    <materialDesign:PackIcon Kind="Login" Height="30" Width="30" />
+                </Button>
+                
+            </StackPanel>
+        </GroupBox>
+        
+    </Grid>
+</UserControl>
